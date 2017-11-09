@@ -29,9 +29,9 @@ class BSTree<T : Comparable<T>> {
      */
     fun inOrder(tree: BSNode<T>?) {
         tree?.let {
-            preOrder(tree.left)
+            inOrder(tree.left)
             print("${tree.key} ")
-            preOrder(tree.right)
+            inOrder(tree.right)
         } ?: print("当前二叉树为空!")
     }
 
@@ -40,8 +40,8 @@ class BSTree<T : Comparable<T>> {
      */
     fun postOrder(tree: BSNode<T>?) {
         tree?.let {
-            preOrder(tree.left)
-            preOrder(tree.right)
+            postOrder(tree.left)
+            postOrder(tree.right)
             print("${tree.key} ")
         } ?: print("当前二叉树为空!")
     }
@@ -85,5 +85,34 @@ class BSTree<T : Comparable<T>> {
             }
         }
         return no
+    }
+
+    /**
+     * 获取二叉查找树最大值的节点
+     * @param tree 某个节点
+     */
+    fun maximum(tree: BSNode<T>?): BSNode<T>? {
+        var node = tree
+        if (node == null) {
+            return null
+        }
+        while (node!!.right != null) {
+            node = node.right
+        }
+        return node
+    }
+
+    /**
+     * 查找最小结点：返回tree为根结点的二叉树的最小结点。
+     */
+    fun minimum(tree: BSNode<T>?): BSNode<T>? {
+        var node = tree
+        if (node == null) {
+            return null
+        }
+        while (node!!.left != null) {
+            node = node.left
+        }
+        return node
     }
 }
