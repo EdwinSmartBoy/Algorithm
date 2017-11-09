@@ -28,15 +28,15 @@ class DoubleLink<T> {
      */
     init {
         mHead = DNode(null, null, null)
-        mHead!!.mPrev = mHead
-        mHead!!.mNext = mHead
+        mHead!!.prev = mHead
+        mHead!!.next = mHead
         mCount = 0
     }
 
     /**
      * 获取链表长度
      */
-    public fun size(): Int {
+    fun size(): Int {
         return mCount
     }
 
@@ -51,25 +51,25 @@ class DoubleLink<T> {
      * 获取第position位置的节点
      * @param position 要获取的节点的位置
      */
-    public fun getNode(position: Int): DNode<T>? {
+    fun getNode(position: Int): DNode<T>? {
         if (mCount < 0 || position > mCount) {
             throw IndexOutOfBoundsException("您输入的位置不存在")
         }
 
         //正向查找
         if (position <= mCount / 2) {
-            var node = mHead!!.mNext
+            var node = mHead!!.next
             for (index: Int in 0 until position) {
-                node = node!!.mNext
+                node = node!!.next
             }
             return node
         }
 
         //反向查找
-        var node = mHead!!.mPrev
+        var node = mHead!!.prev
         val rIndex = mCount - position - 1
         for (index: Int in 0 until rIndex) {
-            node = node!!.mPrev
+            node = node!!.prev
         }
         return node
     }
@@ -77,33 +77,33 @@ class DoubleLink<T> {
     /**
      * 获取第一个位置的节点
      */
-    public fun getFirst(): DNode<T>? {
+    fun getFirst(): DNode<T>? {
         return getNode(0)
     }
 
     /**
      * 获取最后一个节点
      */
-    public fun getLast(): DNode<T>? {
+    fun getLast(): DNode<T>? {
         return getNode(mCount - 1)
     }
 
     /**
      * 将节点插入到第index位置之前
      */
-    public fun insert(index: Int, value: T) {
+    fun insert(index: Int, value: T) {
         if (index == 0) {
-            val node = DNode(value, mHead!!.mPrev, mHead!!.mNext)
-            mHead!!.mPrev = node
-            mHead!!.mNext = node
+            val node = DNode(value, mHead!!.prev, mHead!!.next)
+            mHead!!.prev = node
+            mHead!!.next = node
             mCount++
             return
         }
 
         val iNode = getNode(index)
-        val tNode = DNode(value, iNode!!.mPrev, iNode)
-        iNode.mPrev!!.mNext = tNode
-        iNode.mPrev = tNode
+        val tNode = DNode(value, iNode!!.prev, iNode)
+        iNode.prev!!.next = tNode
+        iNode.prev = tNode
         mCount++
         return
     }
@@ -111,7 +111,7 @@ class DoubleLink<T> {
     /**
      * 将数据插入第一个位置
      */
-    public fun insertFirst(t: T) {
+    fun insertFirst(t: T) {
         insert(0, t)
     }
 
@@ -119,20 +119,20 @@ class DoubleLink<T> {
      * 将节点添加到末尾
      * @param t 数据
      */
-    public fun appendLast(t: T) {
-        val node = DNode(t, mHead!!.mPrev, mHead)
-        mHead!!.mPrev!!.mNext = node
-        mHead!!.mPrev = node
+    fun appendLast(t: T) {
+        val node = DNode(t, mHead!!.prev, mHead)
+        mHead!!.prev!!.next = node
+        mHead!!.prev = node
         mCount++
     }
 
     /**
      * 删除index对应位置的节点
      */
-    public fun del(index: Int) {
+    fun del(index: Int) {
         var node = getNode(index)
-        node!!.mPrev!!.mNext = node.mNext
-        node!!.mNext!!.mPrev = node.mPrev
+        node!!.prev!!.next = node.next
+        node!!.next!!.prev = node.prev
         node = null
         mCount--
     }
@@ -140,14 +140,14 @@ class DoubleLink<T> {
     /**
      * 删除第一个位置的节点
      */
-    public fun deleteFirst() {
+    fun deleteFirst() {
         del(0)
     }
 
     /**
      * 删除最后一个节点
      */
-    public fun deleteLast() {
+    fun deleteLast() {
         del(mCount - 1)
     }
 }
